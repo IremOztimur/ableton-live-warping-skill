@@ -1,0 +1,19 @@
+{
+  "name": "ableton-dj-warp",
+  "owner": { "name": "Irem Oztimur" },
+  "metadata": {
+    "description": "Sample-accurate Ableton Live warping for DJ sets, as a Claude Code plugin.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ableton-dj-warp",
+      "source": "./",
+      "description": "Sample-accurate full-track warping in Ableton Live for DJ sets: exact BPM, true 1.1.1 downbeat, MP3 decoder-offset correction, verification against Live's own decoded audio, and section clips.",
+      "version": "0.1.0",
+      "author": { "name": "Irem Oztimur" },
+      "keywords": ["ableton", "dj", "warp", "bpm", "beatgrid"],
+      "category": "music"
+    }
+  ]
+}

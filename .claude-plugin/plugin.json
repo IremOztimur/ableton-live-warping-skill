@@ -1,0 +1,11 @@
+{
+  "name": "ableton-dj-warp",
+  "description": "Sample-accurate full-track warping in Ableton Live for DJ sets: exact BPM, true 1.1.1 downbeat, MP3 decoder-offset correction, verification against Live's own decoded audio, and section clips.",
+  "version": "0.1.0",
+  "author": { "name": "Irem Oztimur" },
+  "homepage": "https://github.com/IremOztimur/ableton-live-warping-skill",
+  "repository": "https://github.com/IremOztimur/ableton-live-warping-skill",
+  "license": "MIT",
+  "keywords": ["ableton", "ableton-live", "dj", "warp", "bpm", "beatgrid", "music"],
+  "skills": ["./skills/ableton-dj-warp"]
+}
