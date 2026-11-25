@@ -66,7 +66,7 @@ Never eyeball, never trust Live's auto-warp for this, and never report a clip se
 | Use **backtracked onset times** (attack start), not onset-strength peaks. | Peaks sit 5-15 ms late; a 10 ms early/late grid is audible to a DJ. |
 | **Kick band is unreliable** under long 808/sub notes (±30 ms jitter); clap/hat bands are tight. | Fit BPM/phase on clap+hat; use low end only to choose beat vs off-beat. |
 | Busy 16th claps/hats can lock the grid to an 8th/16th **off-beat**. | analyze_track tests all four 16th positions by low-end energy. Symptom: few onsets "on grid", 1.1.1 a quarter/half beat off. |
-| Club tracks almost always start on a downbeat; sections start on bars 8k+1. Some don't (e.g. 2-bar pre-roll: drops at 19, 43…). | Keep 1.1.1 at the first downbeat; tell the user when sections are offset instead of shifting 1.1.1 by bars. |
+| Club tracks almost always start on a downbeat; sections start on bars 8k+1. Some have a short pre-roll (e.g. 2 bars: drops at 19, 67). | DJs need sections on 8k+1: move 1.1.1 forward by the pre-roll (whole bars) so drops land on 17, 33, 65…; the pre-roll then sits before 1.1.1. Say so in the report. A real 4-bar intro is a judgment call: ask. |
 | Sections land on bars 8k (one bar early) and the file has an earlier downbeat. | Move 1.1.1 one bar earlier so sections land on 8k+1. With a genuine 4-bar intro (sections at 5, 21, 37…), keep 1.1.1 and tell the user. |
 | Beatless intros give bogus tempo windows (e.g. "137" in a 140 track). | Judge tempo on the drum sections only. |
 | Live's plain **"Warp From Here" is auto-warp**: follows transients and misreads beatless intros/outros (an outro read as 152-162 BPM → 1.2 s off at the end). | Constant tracks: straight grid only ("Warp <BPM> BPM From Here" = set_clip_warp). |
@@ -74,6 +74,10 @@ Never eyeball, never trust Live's auto-warp for this, and never report a clip se
 | Even a 140 track in a 140 set must be warped: unwarped clips ignore the grid offset and master tempo changes. | Always warp. |
 | "Auto-Warp Long Samples" off → new long clips arrive unwarped; Seg. BPM may show 120. | Expected. A saved .asd (Save Default Clip) restores the warp on the next drag. |
 | **Unlooped clip End = `loop_end`, not `end_marker`.** | Judge clip length via `get_track_info` length. Misreading end_marker produced a false "End is wrong" diagnosis once. |
+
+## Moving 1.1.1 by whole bars on an already-warped clip
+
+set_clip_warp fails with "Warp marker beat time is ahead of left adjacent marker's beat time": the new end marker lands at/after the old end's sample time with a smaller beat. Fix: first `set_warp_markers` with the CURRENT grid's beat 0 and a beat-8 marker (this removes the old end), then run warp_clip.py with the new downbeat.
 
 ## Red flags - stop and re-check
 
