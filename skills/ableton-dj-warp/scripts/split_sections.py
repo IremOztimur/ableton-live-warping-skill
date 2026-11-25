@@ -22,10 +22,18 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def live(cmd, params):
-    out = subprocess.run([sys.executable, "-I", os.path.join(HERE, "live.py"), cmd, json.dumps(params)],
-                         capture_output=True, text=True).stdout
-    return json.loads(out)
+def live(cmd, params, tries=3):
+    """Live sometimes rejects a call right after clips were loaded; retry before giving up."""
+    for _ in range(tries):
+        out = subprocess.run([sys.executable, "-I", os.path.join(HERE, "live.py"), cmd, json.dumps(params)],
+                             capture_output=True, text=True).stdout
+        try:
+            resp = json.loads(out)
+        except ValueError:
+            continue
+        if resp.get("status") == "success":
+            return resp
+    return resp if out else {"status": "error", "message": "no reply"}
 
 
 def parse(spec):
